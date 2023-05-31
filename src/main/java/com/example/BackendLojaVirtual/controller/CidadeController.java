@@ -1,5 +1,6 @@
 package com.example.BackendLojaVirtual.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.BackendLojaVirtual.entity.Cidade;
 import com.example.BackendLojaVirtual.service.CidadeService;
+import com.example.BackendLojaVirtual.service.ImportCidadeService;
 
 
 @RestController
@@ -58,5 +62,19 @@ public class CidadeController {
     @GetMapping("/get/{id}")
     public ResponseEntity<Cidade> buscarPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(cidadeService.buscarPorId(id));
+    }
+
+    @Autowired
+    private ImportCidadeService importCidadeService;
+
+    @PostMapping("/importar-cidades")
+    public ResponseEntity<String> importarCidade(@RequestParam("file") MultipartFile file) {
+        try {
+            importCidadeService.importarCidade(file);
+            return ResponseEntity.ok("Arquivo de cidade importado com sucesso.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao importar o arquivo de cidade.");
+        }
     }
 }

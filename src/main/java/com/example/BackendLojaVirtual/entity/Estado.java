@@ -28,11 +28,7 @@ public class Estado {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 
-    public Estado(String nome, String sigla, boolean status) {
-        this.nome = nome;
-        this.sigla = sigla;
-        this.status = status;
-    }
+
 
     
 }

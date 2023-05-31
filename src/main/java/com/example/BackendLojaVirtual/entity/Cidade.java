@@ -23,6 +23,7 @@ public class Cidade {
     private Long id;
 
     private String nome;
+    private boolean status;
     @ManyToOne
     @JoinColumn(name = "idEstado")
     private Estado estado;
@@ -32,9 +33,5 @@ public class Cidade {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 
-    public Cidade(String nome, Estado estado) {
-        this.nome = nome;
-        this.estado = estado;
-    }
 
 }

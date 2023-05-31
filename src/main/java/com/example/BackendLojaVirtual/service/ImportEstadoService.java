@@ -21,18 +21,33 @@ public class ImportEstadoService {
     public void importarEstados(MultipartFile file) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
         String line;
+        int lineNumber = 0;
         while ((line = reader.readLine()) != null) {
-            String[] data = line.split(",");
+            if (lineNumber != 0) { // Ignora a primeira linha
+                String[] data = line.split(",");
 
-            String nome = data[1];
-            String sigla = data[2];
-            String status = data[3];
-            boolean converter = Boolean.parseBoolean(status);
+                //substitui as primeiras linhas
+                String nome = data[1].replaceAll("\"", "");
+                String sigla = data[2].replaceAll("\"", "");
+                String status = data[3].replaceAll("\"", "");
 
-            Estado estado = new Estado(nome, sigla, converter);
-            estadoRepository.saveAndFlush(estado);
+                boolean converter;
+                if (status.equals("1")) {
+                    converter = true;
+                } else {
+                    converter = false;
+                }
+
+                Estado estado = new Estado();
+                estado.setNome(nome);
+                estado.setSigla(sigla);
+                estado.setStatus(converter);
+                estadoRepository.saveAndFlush(estado);
+            }
+            lineNumber++;
         }
 
         reader.close();
+
     }
 }
