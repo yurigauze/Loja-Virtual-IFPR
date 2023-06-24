@@ -19,65 +19,62 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.BackendLojaVirtual.entity.Estado;
-import com.example.BackendLojaVirtual.service.EstadoService;
-import com.example.BackendLojaVirtual.service.ImportEstadoService;
+import com.example.BackendLojaVirtual.entity.Cidade;
+import com.example.BackendLojaVirtual.service.CidadeService;
+import com.example.BackendLojaVirtual.service.ImportCidadeService;
 
-import jakarta.annotation.Generated;
-import jakarta.websocket.server.PathParam;
 
 @RestController
-@RequestMapping("/api/estado")
+@RequestMapping("/api/cidade")
 @CrossOrigin
-public class EstadoController {
+public class CidadeController {
 
     @Autowired
-    private EstadoService estadoService;
-    
+    private CidadeService cidadeService;
+
     @GetMapping("/get")
-    public List<Estado> buscarTodos() {
-        return estadoService.buscarTodos();
+    public List<Cidade> buscarTodos() {
+        return cidadeService.buscarTodos();
     }
 
     @PostMapping("/post")
-    public Estado inserir(@RequestBody Estado estado) {
-        return estadoService.inserir(estado);
+    public Cidade inserir(@RequestBody Cidade cidade) {
+        return cidadeService.inserir(cidade);
 
     }
 
     @PutMapping("/alterar")
-    public Estado alterar(@RequestBody Estado estado) {
-        return estadoService.alterar(estado);
+    public Cidade alterar(@RequestBody Cidade cidade) {
+        return cidadeService.alterar(cidade);
 
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> excluirEstado(@PathVariable Long id) {
+    public ResponseEntity<Object> excluirCidade(@PathVariable Long id) {
         try {
-            estadoService.excluir(id);
-            return ResponseEntity.ok("Estado excluído com sucesso");
+            cidadeService.excluir(id);
+            return ResponseEntity.ok("Cidade excluída com sucesso");
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Estado> buscarPorId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(estadoService.buscarPorId(id));
+    public ResponseEntity<Cidade> buscarPorId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(cidadeService.buscarPorId(id));
     }
 
     @Autowired
-    private ImportEstadoService importEstadoService;
+    private ImportCidadeService importCidadeService;
 
-    @PostMapping("/importar-estados")
-    public ResponseEntity<String> importarEstados(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/importar-cidades")
+    public ResponseEntity<String> importarCidade(@RequestParam("file") MultipartFile file) {
         try {
-            importEstadoService.importarEstados(file);
-            return ResponseEntity.ok("Arquivo de estados importado com sucesso.");
+            importCidadeService.importarCidade(file);
+            return ResponseEntity.ok("Arquivo de cidade importado com sucesso.");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao importar o arquivo de estados.");
+                    .body("Erro ao importar o arquivo de cidade.");
         }
     }
-
 }
