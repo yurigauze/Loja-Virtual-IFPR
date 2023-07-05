@@ -14,56 +14,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.BackendLojaVirtual.entity.Pessoa;
-import com.example.BackendLojaVirtual.service.PessoaService;
+import com.example.BackendLojaVirtual.entity.CarrinhoCompraProduto;
+import com.example.BackendLojaVirtual.service.CarrinhoCompraProdutoService;
 
 @RestController
-@RequestMapping("/api/pessoa")
+@RequestMapping("/api/carrinhocompraproduto")
 @CrossOrigin
-public class PessoaController {
+public class CarrinhoCompraProdutoController {
 
     @Autowired
-    private PessoaService pessoaService;
+    private CarrinhoCompraProdutoService arrinhoCompraProdutoService;
 
     @GetMapping("/get")
-    public List<Pessoa> buscarTodos() {
-        return pessoaService.buscarTodos();
+    public List<CarrinhoCompraProduto> buscarTodos() {
+        return arrinhoCompraProdutoService.buscarTodos();
     }
 
     @PostMapping("/post")
-    public Pessoa inserir(@RequestBody Pessoa pessoa) {
-        return pessoaService.inserir(pessoa);
+    public CarrinhoCompraProduto inserir(@RequestBody CarrinhoCompraProduto arrinhoCompraProduto) {
+        return arrinhoCompraProdutoService.inserir(arrinhoCompraProduto);
 
     }
 
     @PutMapping("/alterar")
-    public Pessoa alterar(@RequestBody Pessoa pessoa) {
-        return pessoaService.alterar(pessoa);
+    public CarrinhoCompraProduto alterar(@RequestBody CarrinhoCompraProduto arrinhoCompraProduto) {
+        return arrinhoCompraProdutoService.alterar(arrinhoCompraProduto);
 
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> excluirPessoa(@PathVariable Long id) {
+    public ResponseEntity<Object> excluirCarrinhoCompraProduto(@PathVariable Long id) {
         try {
-            pessoaService.excluir(id);
-            return ResponseEntity.ok("Pessoa excluída com sucesso");
+            arrinhoCompraProdutoService.excluir(id);
+            return ResponseEntity.ok("Estado excluído com sucesso");
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Pessoa> buscarPorId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(pessoaService.buscarPorId(id));
-    }
-
-
-    //Testar
-    @GetMapping("/buscar-por-cidade")
-    public ResponseEntity<List<Pessoa>> buscarPessoasPorCidadeId(@RequestParam("idCidade")Long id){
-        return ResponseEntity.ok(pessoaService.buscarPessoasPorCidadeId(id));
+    public ResponseEntity<CarrinhoCompraProduto> buscarPorId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(arrinhoCompraProdutoService.buscarPorId(id));
     }
 }

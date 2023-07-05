@@ -16,6 +16,11 @@ public class PessoaService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    public List<Pessoa> buscarPessoasPorCidadeId(Long idCidade) {
+        return pessoaRepository.findByCidadeId(idCidade);
+    }
+
+
     public List<Pessoa> buscarTodos() {
         return pessoaRepository.findAll();
     }

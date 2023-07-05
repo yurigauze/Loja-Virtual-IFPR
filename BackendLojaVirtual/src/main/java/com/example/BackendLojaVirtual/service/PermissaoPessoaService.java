@@ -20,6 +20,10 @@ public class PermissaoPessoaService {
         return permissaopessoaRepository.findAll();
     }
 
+     public List<PermissaoPessoa> buscarPermissaoId(Long idPermissao) {
+        return permissaopessoaRepository.findByPermissaoId(idPermissao);
+    }
+
     public PermissaoPessoa buscarPorId(Long id) {
         return permissaopessoaRepository.findById(id).get();
     }

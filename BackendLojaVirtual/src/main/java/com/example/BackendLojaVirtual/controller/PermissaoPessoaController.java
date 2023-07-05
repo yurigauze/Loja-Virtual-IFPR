@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.BackendLojaVirtual.entity.PermissaoPessoa;
+import com.example.BackendLojaVirtual.entity.Pessoa;
 import com.example.BackendLojaVirtual.service.PermissaoPessoaService;
 
 @RestController
@@ -57,5 +59,11 @@ public class PermissaoPessoaController {
     @GetMapping("/get/{id}")
     public ResponseEntity<PermissaoPessoa> buscarPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(permissaopessoaService.buscarPorId(id));
+    }
+
+        //Testar
+    @GetMapping("/buscar-por-permissao")
+    public ResponseEntity<List<PermissaoPessoa>> findByPermissaoId(@RequestParam("idPermissao")Long id){
+        return ResponseEntity.ok(permissaopessoaService.buscarPermissaoId(id));
     }
 }
